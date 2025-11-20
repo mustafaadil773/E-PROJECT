@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Sound Quiz - BabyCare Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/baby-sound-quiz.css">
+</head>
+<body>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <div class="quiz-container">
+        <!-- Fun emoji decorations -->
+        <div class="emoji-decoration emoji-1">🎵</div>
+        <div class="emoji-decoration emoji-2">🔊</div>
+        <div class="emoji-decoration emoji-3">🎶</div>
+        <div class="emoji-decoration emoji-4">🎼</div>
+        
+        <div class="quiz-header">
+            <!-- Back to Home Button -->
+            <button class="back-btn" onclick="goToHome()">
+                <i class="bi bi-house-fill"></i>
+                Home
+            </button>
+            
+            <h1 class="quiz-title">
+                <i class="bi bi-music-note-beamed"></i> Baby Sound Quiz
+            </h1>
+        </div>
+        
+        <div class="score-container">
+            <div class="score-item">
+                <span class="score-label">Score</span>
+                <span class="score-value" id="score">0</span>
+            </div>
+            <div class="score-item">
+                <span class="score-label">Round</span>
+                <span class="score-value" id="round">1</span>
+            </div>
+        </div>
+        
+        <div class="sound-section">
+            <button class="play-sound-btn" id="playSoundBtn" onclick="playSound()">
+                <i class="bi bi-play-circle-fill"></i>
+                Play Sound
+            </button>
+            <div class="sound-display" id="soundDisplay">
+                <span id="soundEmoji">🔊</span>
+            </div>
+        </div>
+        
+        <div class="options-container" id="optionsContainer">
+            <!-- Options will be generated here -->
+        </div>
+        
+        <div class="feedback">
+            <p class="feedback-text" id="feedback"></p>
+        </div>
+        
+        <button class="next-btn" id="nextBtn" onclick="nextRound()">
+            <i class="bi bi-arrow-right-circle-fill"></i> Next
+        </button>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create animated bubbles
+            createBubbles();
+            
+            // Initialize game
+            initGame();
+        });
+        
+        // Create animated bubbles
+        function createBubbles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.background = color;
+                bubble.style.animationDuration = `${animationDuration}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        }
+        
+        // Go to home page
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        
+        // Game data
+        const sounds = [
+            { emoji: '🐮', name: 'Cow', sound: 'Moo!' },
+            { emoji: '🔔', name: 'Bell', sound: 'Ding!' },
+            { emoji: '😂', name: 'Laugh', sound: 'Haha!' },
+            { emoji: '🐶', name: 'Dog', sound: 'Woof!' },
+            { emoji: '🐱', name: 'Cat', sound: 'Meow!' },
+            { emoji: '🦆', name: 'Duck', sound: 'Quack!' },
+            { emoji: '🐑', name: 'Sheep', sound: 'Baa!' },
+            { emoji: '🐸', name: 'Frog', sound: 'Ribbit!' },
+            { emoji: '🚗', name: 'Car', sound: 'Vroom!' },
+            { emoji: '🚂', name: 'Train', sound: 'Choo!' },
+            { emoji: '✈️', name: 'Plane', sound: 'Whoosh!' },
+            { emoji: '🚲', name: 'Bike', sound: 'Ring!' },
+            { emoji: '🎈', name: 'Balloon', sound: 'Pop!' },
+            { emoji: '🎯', name: 'Target', sound: 'Hit!' },
+            { emoji: '🎪', name: 'Circus', sound: 'Ta-da!' }
+        ];
+        
+        let currentSound = null;
+        let score = 0;
+        let round = 1;
+        let hasAnswered = false;
+        
+        // DOM elements
+        const playSoundBtn = document.getElementById('playSoundBtn');
+        const soundDisplay = document.getElementById('soundDisplay');
+        const soundEmoji = document.getElementById('soundEmoji');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('nextBtn');
+        const scoreEl = document.getElementById('score');
+        const roundEl = document.getElementById('round');
+        
+        // Initialize game
+        function initGame() {
+            score = 0;
+            round = 1;
+            updateScore();
+            generateNewRound();
+        }
+        
+        // Generate new round
+        function generateNewRound() {
+            hasAnswered = false;
+            resetFeedback();
+            hideNextButton();
+            
+            // Select random sound
+            currentSound = sounds[Math.floor(Math.random() * sounds.length)];
+            
+            // Generate 3 options (1 correct, 2 wrong)
+            const options = [currentSound];
+            
+            // Add 2 random wrong options
+            while (options.length < 3) {
+                const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+                if (!options.includes(randomSound)) {
+                    options.push(randomSound);
+                }
+            }
+            
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+            
+            // Create option cards
+            optionsContainer.innerHTML = '';
+            options.forEach((option, index) => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.onclick = () => selectOption(option, card);
+                
+                card.innerHTML = `
+                    <span class="option-emoji">${option.emoji}</span>
+                    <div class="option-name">${option.name}</div>
+                `;
+                
+                optionsContainer.appendChild(card);
+            });
+            
+            // Reset sound display
+            soundEmoji.textContent = '🔊';
+        }
+        
+        // Play sound
+        function playSound() {
+            if (!currentSound) return;
+            
+            // Animate button
+            playSoundBtn.classList.add('playing');
+            
+            // Show sound emoji
+            soundEmoji.textContent = currentSound.emoji;
+            soundDisplay.style.animation = 'none';
+            void soundDisplay.offsetWidth; // Trigger reflow
+            soundDisplay.style.animation = 'bounceIn 0.5s ease';
+            
+            // Show toast with sound text
+            showToast(`Sound: ${currentSound.sound}`);
+            
+            // Remove animation class
+            setTimeout(() => {
+                playSoundBtn.classList.remove('playing');
+            }, 1500);
+        }
+        
+        // Select option
+        function selectOption(option, card) {
+            if (hasAnswered) return;
+            
+            hasAnswered = true;
+            
+            // Disable all cards
+            const allCards = document.querySelectorAll('.option-card');
+            allCards.forEach(c => c.style.pointerEvents = 'none');
+            
+            if (option === currentSound) {
+                // Correct answer
+                card.classList.add('correct');
+                showFeedback('✅ Correct! Great job!', true);
+                score++;
+                updateScore();
+                celebrateSuccess();
+            } else {
+                // Wrong answer
+                card.classList.add('incorrect');
+                showFeedback('❌ Try again!', false);
+                
+                // Show correct answer
+                allCards.forEach(c => {
+                    if (c.querySelector('.option-name').textContent === currentSound.name) {
+                        c.classList.add('correct');
+                    }
+                });
+            }
+            
+            // Show next button
+            showNextButton();
+        }
+        
+        // Next round
+        function nextRound() {
+            round++;
+            updateScore();
+            generateNewRound();
+        }
+        
+        // Show feedback
+        function showFeedback(message, isCorrect) {
+            feedback.textContent = message;
+            feedback.className = 'feedback-text show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+        }
+        
+        // Reset feedback
+        function resetFeedback() {
+            feedback.className = 'feedback-text';
+        }
+        
+        // Show next button
+        function showNextButton() {
+            nextBtn.classList.add('show');
+        }
+        
+        // Hide next button
+        function hideNextButton() {
+            nextBtn.classList.remove('show');
+        }
+        
+        // Update score
+        function updateScore() {
+            scoreEl.textContent = score;
+            roundEl.textContent = round;
+            
+            // Animate score
+            scoreEl.style.animation = 'none';
+            roundEl.style.animation = 'none';
+            setTimeout(() => {
+                scoreEl.style.animation = 'bounce 0.5s ease';
+                roundEl.style.animation = 'bounce 0.5s ease';
+            }, 10);
+        }
+        
+        // Celebrate success
+        function celebrateSuccess() {
+            // Create celebration emojis
+            const emojis = ['🎉', '🌟', '🎈', '🎊', '✨'];
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.cssText = `
+                        position: fixed;
+                        left: ${Math.random() * window.innerWidth}px;
+                        top: ${window.innerHeight}px;
+                        font-size: 2rem;
+                        z-index: 9999;
+                        pointer-events: none;
+                        animation: float-up 2s ease-out forwards;
+                    `;
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 2000);
+                }, i * 100);
+            }
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: white;
+                padding: 1rem 1.5rem;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                font-family: 'Bubblegum Sans', cursive;
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--primary-color);
+                z-index: 1000;
+                border: 3px solid var(--accent-color);
+                animation: slideInUp 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideInDown 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+        
+        // Add slideInDown animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInDown {
+                from {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

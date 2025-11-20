@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game - BabyCare Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/puzzle-game.css">
+</head>
+<body>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- Header -->
+    <header class="game-header">
+        <div class="header-container">
+            <button class="back-btn" onclick="goToHome()">
+                <i class="bi bi-house-fill"></i>
+                Home
+            </button>
+            <h1 class="game-title">
+                <i class="bi bi-puzzle-fill"></i> Puzzle Game
+            </h1>
+        </div>
+    </header>
+    
+    <!-- Main Game Container -->
+    <main class="game-container">
+        <!-- Instructions -->
+        <div class="instructions">
+            <p class="instructions-text">🧩 Drag the pieces to complete the puzzle!</p>
+        </div>
+        
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <p class="progress-text">Progress: <span id="progressText">0/4</span></p>
+            <div class="progress-dots">
+                <div class="progress-dot" id="dot1"></div>
+                <div class="progress-dot" id="dot2"></div>
+                <div class="progress-dot" id="dot3"></div>
+                <div class="progress-dot" id="dot4"></div>
+            </div>
+        </div>
+        
+        <!-- Puzzle Area -->
+        <div class="puzzle-area">
+            <!-- Puzzle Pieces Container -->
+            <div class="pieces-container">
+                <h2 class="pieces-title">🎨 Puzzle Pieces</h2>
+                <div class="pieces-grid">
+                    <div class="puzzle-piece piece-sun" draggable="true" data-piece="sun">☀️</div>
+                    <div class="puzzle-piece piece-house" draggable="true" data-piece="house">🏠</div>
+                    <div class="puzzle-piece piece-tree" draggable="true" data-piece="tree">🌳</div>
+                    <div class="puzzle-piece piece-flower" draggable="true" data-piece="flower">🌸</div>
+                </div>
+            </div>
+            
+            <!-- Puzzle Board -->
+            <div class="puzzle-board">
+                <h2 class="board-title">🎯 Complete the Picture</h2>
+                <div class="puzzle-grid">
+                    <div class="puzzle-slot" data-piece="sun">
+                        <div class="slot-outline slot-sun">☀️</div>
+                    </div>
+                    <div class="puzzle-slot" data-piece="house">
+                        <div class="slot-outline slot-house">🏠</div>
+                    </div>
+                    <div class="puzzle-slot" data-piece="tree">
+                        <div class="slot-outline slot-tree">🌳</div>
+                    </div>
+                    <div class="puzzle-slot" data-piece="flower">
+                        <div class="slot-outline slot-flower">🌸</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <h2 class="success-title">🎉 Yay! You solved it!</h2>
+            <p class="success-text">Great job! You're a puzzle expert!</p>
+            <button class="play-again-btn" onclick="resetGame()">
+                <i class="bi bi-arrow-clockwise"></i> Play Again
+            </button>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create animated bubbles
+            createBubbles();
+            
+            // Initialize drag and drop
+            initDragAndDrop();
+        });
+        
+        // Create animated bubbles
+        function createBubbles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.background = color;
+                bubble.style.animationDuration = `${animationDuration}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        }
+        
+        // Game variables
+        let completedPieces = 0;
+        let totalPieces = 4;
+        let draggedElement = null;
+        
+        // Initialize drag and drop
+        function initDragAndDrop() {
+            const puzzlePieces = document.querySelectorAll('.puzzle-piece');
+            const puzzleSlots = document.querySelectorAll('.puzzle-slot');
+            
+            // Add drag event listeners to pieces
+            puzzlePieces.forEach(piece => {
+                piece.addEventListener('dragstart', handleDragStart);
+                piece.addEventListener('dragend', handleDragEnd);
+                
+                // Touch events for mobile
+                piece.addEventListener('touchstart', handleTouchStart, {passive: false});
+                piece.addEventListener('touchmove', handleTouchMove, {passive: false});
+                piece.addEventListener('touchend', handleTouchEnd);
+            });
+            
+            // Add drop event listeners to slots
+            puzzleSlots.forEach(slot => {
+                slot.addEventListener('dragover', handleDragOver);
+                slot.addEventListener('drop', handleDrop);
+                slot.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+        
+        // Drag start
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+        
+        // Drag end
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+        
+        // Drag over
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            e.target.classList.add('drag-over');
+            return false;
+        }
+        
+        // Drag leave
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+        
+        // Drop
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.target.classList.remove('drag-over');
+            
+            const pieceType = draggedElement.dataset.piece;
+            const slotType = e.target.dataset.piece;
+            
+            if (pieceType === slotType && !e.target.querySelector('.puzzle-piece')) {
+                // Correct placement
+                e.target.appendChild(draggedElement);
+                e.target.classList.add('correct');
+                draggedElement.classList.add('placed');
+                draggedElement.draggable = false;
+                draggedElement.style.cursor = 'default';
+                
+                // Show success animation and sound
+                showSuccessEffect(e.target);
+                
+                // Update progress
+                completedPieces++;
+                updateProgress();
+                
+                // Check if puzzle is complete
+                if (completedPieces === totalPieces) {
+                    setTimeout(showSuccessMessage, 1000);
+                }
+            } else {
+                // Wrong placement - bounce back
+                animateWrongPlacement(draggedElement);
+            }
+            
+            return false;
+        }
+        
+        // Touch events for mobile
+        let touchItem = null;
+        let touchOffset = {x: 0, y: 0};
+        
+        function handleTouchStart(e) {
+            touchItem = e.target;
+            const touch = e.touches[0];
+            const rect = touchItem.getBoundingClientRect();
+            touchOffset.x = touch.clientX - rect.left;
+            touchOffset.y = touch.clientY - rect.top;
+            touchItem.style.position = 'fixed';
+            touchItem.style.zIndex = '1000';
+            touchItem.classList.add('dragging');
+        }
+        
+        function handleTouchMove(e) {
+            if (!touchItem) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            touchItem.style.left = (touch.clientX - touchOffset.x) + 'px';
+            touchItem.style.top = (touch.clientY - touchOffset.y) + 'px';
+        }
+        
+        function handleTouchEnd(e) {
+            if (!touchItem) return;
+            
+            const touch = e.changedTouches[0];
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            touchItem.classList.remove('dragging');
+            touchItem.style.position = '';
+            touchItem.style.zIndex = '';
+            touchItem.style.left = '';
+            touchItem.style.top = '';
+            
+            if (elementBelow && elementBelow.classList.contains('puzzle-slot')) {
+                const pieceType = touchItem.dataset.piece;
+                const slotType = elementBelow.dataset.piece;
+                
+                if (pieceType === slotType && !elementBelow.querySelector('.puzzle-piece')) {
+                    elementBelow.appendChild(touchItem);
+                    elementBelow.classList.add('correct');
+                    touchItem.classList.add('placed');
+                    touchItem.draggable = false;
+                    touchItem.style.cursor = 'default';
+                    
+                    showSuccessEffect(elementBelow);
+                    completedPieces++;
+                    updateProgress();
+                    
+                    if (completedPieces === totalPieces) {
+                        setTimeout(showSuccessMessage, 1000);
+                    }
+                } else {
+                    animateWrongPlacement(touchItem);
+                }
+            }
+            
+            touchItem = null;
+        }
+        
+        // Show success effect
+        function showSuccessEffect(element) {
+            // Create sound effect
+            showSoundEffect('🎉');
+            
+            // Add glow effect
+            element.style.boxShadow = '0 0 30px rgba(108, 207, 127, 0.8)';
+            setTimeout(() => {
+                element.style.boxShadow = '';
+            }, 1000);
+        }
+        
+        // Animate wrong placement
+        function animateWrongPlacement(element) {
+            element.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 500);
+        }
+        
+        // Show sound effect
+        function showSoundEffect(emoji) {
+            const soundEffect = document.createElement('div');
+            soundEffect.className = 'sound-effect';
+            soundEffect.textContent = emoji;
+            document.body.appendChild(soundEffect);
+            
+            setTimeout(() => {
+                soundEffect.remove();
+            }, 500);
+        }
+        
+        // Update progress
+        function updateProgress() {
+            document.getElementById('progressText').textContent = `${completedPieces}/${totalPieces}`;
+            
+            // Update progress dots
+            for (let i = 1; i <= completedPieces; i++) {
+                const dot = document.getElementById(`dot${i}`);
+                if (dot) {
+                    dot.classList.add('completed');
+                }
+            }
+        }
+        
+        // Show success message
+        function showSuccessMessage() {
+            document.getElementById('successMessage').classList.add('show');
+            createConfetti();
+        }
+        
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 30);
+            }
+        }
+        
+        // Reset game
+        function resetGame() {
+            completedPieces = 0;
+            updateProgress();
+            
+            // Hide success message
+            document.getElementById('successMessage').classList.remove('show');
+            
+            // Reset pieces
+            const piecesContainer = document.querySelector('.pieces-grid');
+            piecesContainer.innerHTML = `
+                <div class="puzzle-piece piece-sun" draggable="true" data-piece="sun">☀️</div>
+                <div class="puzzle-piece piece-house" draggable="true" data-piece="house">🏠</div>
+                <div class="puzzle-piece piece-tree" draggable="true" data-piece="tree">🌳</div>
+                <div class="puzzle-piece piece-flower" draggable="true" data-piece="flower">🌸</div>
+            `;
+            
+            // Reset slots
+            document.querySelectorAll('.puzzle-slot').forEach(slot => {
+                slot.classList.remove('correct');
+                const piece = slot.querySelector('.puzzle-piece');
+                if (piece) {
+                    piecesContainer.appendChild(piece);
+                }
+            });
+            
+            // Reset progress dots
+            for (let i = 1; i <= totalPieces; i++) {
+                const dot = document.getElementById(`dot${i}`);
+                if (dot) {
+                    dot.classList.remove('completed');
+                }
+            }
+            
+            // Reinitialize drag and drop
+            initDragAndDrop();
+        }
+        
+        // Go to home page
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

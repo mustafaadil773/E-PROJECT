@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabyCare Hub - Learn & Play Paradise!</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/index.css">
+
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <i class="fas fa-baby loader-icon"></i>
+            <p style="margin-top: 1rem; color: var(--dark-color); font-family: 'Bubblegum Sans', cursive; font-size: 1.5rem;">Loading Fun & Learning...</p>
+        </div>
+    </div>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light rounded-pill shadow-sm my-4">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="image/logo.png" alt="Tiny Learners Logo" height="40" style="width:auto;">
+        <span class="brand-name">Tiny Learners</span>
+    </a>
+    <button class="navbar-toggler pastel-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-center gap-lg-4 gap-2">
+        <li class="nav-item">
+          <a class="nav-link" href="#home">🏠 Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">📖 About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#programs">🎨 Programs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn enroll-btn ms-lg-3" href="#enroll">Enroll Now</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="hero-badge">🎈 Fun Learning for Little Ones!</span>
+                <h1>Learn, Play & Grow Every Day!</h1>
+                <p class="hero-description">
+                    Welcome to the magical world of learning and games designed specially for babies and toddlers to explore, discover and have fun!
+                </p>
+                <div class="hero-buttons">
+                    <a href="#learning" class="btn-primary">
+                        <i class="fas fa-graduation-cap"></i>
+                        Start Learning
+                    </a>
+                    <a href="#games" class="btn-secondary">
+                        <i class="fas fa-gamepad"></i>
+                        Play Games
+                    </a>
+                </div>
+                <div class="age-selector">
+                    <div class="age-chip active" onclick="selectAge(this)">👶 0-6 Months</div>
+                    <div class="age-chip" onclick="selectAge(this)">🧸 6-12 Months</div>
+                    <div class="age-chip" onclick="selectAge(this)">🚀 1-2 Years</div>
+                    <div class="age-chip" onclick="selectAge(this)">🌟 2-3 Years</div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="floating-icons">
+                    <span class="floating-icon" onclick="showInfo('abc')">🔤</span>
+                    <span class="floating-icon" onclick="showInfo('123')">🔢</span>
+                    <span class="floating-icon" onclick="showInfo('shapes')">🔷</span>
+                    <span class="floating-icon" onclick="showInfo('colors')">🎨</span>
+                </div>
+                <div class="hero-image-container">
+                    <img src="image/baby.png" alt="Baby Learning">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Section -->
+    <section class="learning" id="learning">
+        <div class="learning-container">
+            <h2 class="section-title">Fun Learning Activities</h2>
+                    <div class="learning-grid">
+                     <div class="learning-card" onclick="window.location.href='abc-adventure.html'">
+                    <div class="learning-icon">🚀</div>
+                    <div class="learning-info">
+                        <h3 class="learning-title">ABC Adventure</h3>
+                        <p class="learning-description">Explore the alphabet with fun songs and activities!</p>
+                    </div>
+                    </div>
+                    <div class="learning-card" onclick="window.location.href='number-writing-learning.html'">
+                    <div class="learning-icon">
+                        🔢
+                    </div>
+                    <div class="learning-info">
+                        <h3 class="learning-title">Number Writing</h3>
+                        <p class="learning-description">Practice writing numbers with fun activities!</p>
+                    </div>
+                    </div>
+                  <div class="learning-card" onclick="window.location.href='shapes-learning.html'">
+                 <div class="learning-icon">
+                 🔷
+                 </div>
+                <div class="learning-info">
+                    <h3 class="learning-title">Shapes</h3>
+                    <p class="learning-description">Learn to identify and name basic shapes!</p>
+                </div>
+                </div>
+                <div class="learning-card" onclick="window.location.href='animal-sounds.html'">
+                    <div class="learning-icon">
+                        🐾
+                    </div>
+                    <div class="learning-info">
+                        <h3 class="learning-title">Animal Sounds</h3>
+                        <p class="learning-description">Learn animal sounds and have fun!</p>
+                    </div>
+                </div>
+                    
+                </div>
+    </section>
+     <!-- Games Section -->
+  <section class="games" id="games">
+    <div class="games-container">
+      <h2 class="section-title">Interactive Games</h2>
+      <div class="games-grid">
+        <!-- First 3 Games (always visible) -->
+        <div class="game-card">
+          <div class="game-icon">🎨</div>
+          <h3 class="game-title">Color Match</h3>
+          <p class="game-description">Match the colors and learn about different shades! Perfect for visual development.</p>
+          <button class="play-btn" onclick="openColorMatchGame()"> Play Now</button>
+        </div>
+
+        <div class="game-card">
+          <div class="game-icon">🎵</div>
+          <h3 class="game-title">Baby Sound Quiz</h3>
+          <p class="game-description">Listen to sounds and match them with pictures! Fun audio learning game!</p>
+          <button class="play-btn" onclick="openSoundQuiz()">Play Now</button>
+        </div>
+
+        <div class="game-card">
+          <div class="game-icon">🔺</div>
+          <h3 class="game-title">Shape Builder</h3>
+          <p class="game-description">Drag and drop shapes to match their outlines! Perfect for learning geometric shapes!</p>
+          <button class="play-btn" onclick="openShapeGame()">Play Now</button>
+        </div>
+
+        <!-- Hidden Games -->
+        <div class="game-card hidden-game">
+          <div class="game-icon">🎹</div>
+          <h3 class="game-title">Music Maker</h3>
+          <p class="game-description">Create beautiful music with colorful instruments and fun sounds!</p>
+          <button class="play-btn" onclick="openMusicGame()">Play Now</button>
+        </div>
+
+        <div class="game-card hidden-game">
+          <div class="game-icon">🧩</div>
+          <h3 class="game-title">Simple Puzzles</h3>
+          <p class="game-description">Easy puzzles designed for little hands and growing minds!</p>
+          <button class="play-btn" onclick="openPuzzleGame()">Play Now</button>
+        </div>
+      </div>
+
+      <!-- View More Button -->
+      <button class="btn-view-more" id="viewMoreBtn">👀 View More</button>
+    </div>
+  </section>
+    <!-- Tips Section -->
+    <section class="tips" id="tips">
+        <div class="tips-container">
+            <h2 class="section-title">Parenting Tips</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">🧠</div>
+                    <h3 class="tip-title">Brain Development</h3>
+                    <p class="tip-content">Simple activities like reading, singing and talking help build your baby's brain connections!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">👀</div>
+                    <h3 class="tip-title">Visual Stimulation</h3>
+                    <p class="tip-content">High-contrast colors and patterns help develop your baby's vision and focus!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🤲</div>
+                    <h3 class="tip-title">Motor Skills</h3>
+                    <p class="tip-content">Tummy time and reaching for toys help strengthen muscles and coordination!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🎵</div>
+                    <h3 class="tip-title">Musical Learning</h3>
+                    <p class="tip-content">Music and rhythm help with language development and emotional expression!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🗣️</div>
+                    <h3 class="tip-title">Language Skills</h3>
+                    <p class="tip-content">Talk, read and sing to your baby every day to build vocabulary!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">❤️</div>
+                    <h3 class="tip-title">Emotional Bonding</h3>
+                    <p class="tip-content">Cuddles, smiles and responsive care build secure attachments!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Pricing Plans Section -->
+    <section class="pricing-section py-5">
+        <div class="container">
+           <h2 class="packages-heading">Packages</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+            <div class="pricing-card pastel-card shadow-sm h-100 text-center">
+            <div class="pricing-icon mb-2">⭐</div>
+                <h4 class="mb-1">1️⃣ Starter Plan</h4>
+            <div class="price mb-2">$4.99/month</div>
+            <div class="desc mb-3">Fun intro for curious toddlers.<br>1x/week guided sessions.<br>🌟 “A gentle start for your toddler!”<br>🎨 "Basic games and interactive songs to introduce colors, shapes, and sounds."<br>🎵 "Perfect for curious little minds taking their first playful learning steps."</div>
+                <button class="subscribe-btn">Subscribe</button>
+            </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="pricing-card pastel-card pricing-featured shadow-lg h-100 text-center">
+          <div class="pricing-icon mb-2">🎵</div>
+            <h4 class="mb-1">2️⃣ Smart Learner</h4>
+          <div class="price mb-2">$9.99/month (Most Popular)</div>
+          <div class="desc mb-3">Most popular! Group music, art, and stories.<br>2x/week classes and bonus songs.<br>🚀 “Unlock more fun and learning!”<br>"🧩 Puzzles, music, and interactive games to explore numbers, letters, and creativity."<br>"⭐ Boost your toddler’s skills while keeping learning exciting and playful."</div>
+            <button class="subscribe-btn featured-btn">Subscribe</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="pricing-card pastel-card shadow-sm h-100 text-center">
+          <div class="pricing-icon mb-2">🧩</div>
+            <h4 class="mb-1">3️⃣ Super Explorer</h4>
+          <div class="price mb-2">$14.99/month</div>
+          <div class="desc mb-3">Unlimited activities.<br>Priority enrollment & all explorer perks.<br>"🌈 “Full access to everything for your little explorer!”<br>"🎹 All games, puzzles, and monthly updates with tips for parents."<br>"🌟 Perfect for toddlers ready for a complete, fun-filled learning journey."</div>
+            <button class="subscribe-btn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Responsive Two-Column Image + Text Section -->
+<section class="learning-two-col-section py-5">
+  <div class="container">
+    <div class="row align-items-center gx-5">
+      <!-- Left: Image Column -->
+      <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+        <div class="img-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" 
+            alt="Children learning and playing"
+            class="img-fluid learning-img shadow"
+          />
+        </div>
+      </div>
+      <!-- Right: Text Column -->
+      <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
+        <h2 class="learning-heading mb-3">
+          Early Learning Solutions for Toddlers
+        </h2>
+        <p class="learning-desc mb-0">
+        Education is one of the most important gifts we can give to children.
+        It shapes their future and helps them grow into confident and responsible individuals.
+        Education provides essential knowledge and academic skills.
+        It also fosters critical thinking, creativity, and problem-solving abilities.
+        Through learning, children develop empathy, social values, and teamwork skills.
+        Education opens doors to opportunities and empowers them to pursue their dreams.<br><br>
+        It builds self-confidence and helps children make informed decisions.
+        By providing quality education, we give children the tools to reach their full potential.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+    <!-- 🌟 Auto-Sliding Reviews Section — Insert Above Pricing or Before Footer -->
+<section id="reviews" class="py-5" style="background-color: #fef9f6;">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5" style="color: #ff7b54;">What Parents Say</h2>
+
+    <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+
+        <!-- Review 1 -->
+        <div class="carousel-item active">
+          <div class="card shadow-sm border-0 rounded-4 p-4 mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+              <div class="mb-3 text-warning fs-4">⭐️⭐️⭐️⭐️⭐️</div>
+              <p class="text-muted">"My toddler loves these games! They’re fun and educational."</p>
+              <h6 class="mt-3 fw-bold" style="color: #ff7b54;">— Sarah, Mom of 3-year-old</h6>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="carousel-item">
+          <div class="card shadow-sm border-0 rounded-4 p-4 mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+              <div class="mb-3 text-warning fs-4">⭐️⭐️⭐️⭐️⭐️</div>
+              <p class="text-muted">"The puzzles and songs are amazing! My child keeps learning every day."</p>
+              <h6 class="mt-3 fw-bold" style="color: #ff7b54;">— Ahmed, Father of 4-year-old</h6>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="carousel-item">
+          <div class="card shadow-sm border-0 rounded-4 p-4 mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+              <div class="mb-3 text-warning fs-4">⭐️⭐️⭐️⭐️⭐️</div>
+              <p class="text-muted">"It’s so easy to use! The bright colors keep my daughter interested."</p>
+              <h6 class="mt-3 fw-bold" style="color: #ff7b54;">— Emily, Mom of 2-year-old</h6>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="carousel-item">
+          <div class="card shadow-sm border-0 rounded-4 p-4 mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+              <div class="mb-3 text-warning fs-4">⭐️⭐️⭐️⭐️⭐️</div>
+              <p class="text-muted">"A wonderful way to make learning fun and simple for toddlers!"</p>
+              <h6 class="mt-3 fw-bold" style="color: #ff7b54;">— Daniel, Parent of 3-year-old</h6>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Optional Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+  
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">
+                    <i class="fas fa-baby"></i>
+                    BabyCare Hub
+                </h3>
+                <p class="footer-description">
+                    Your magical world of learning and play for little ones! 🌈
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link" onclick="showToast('Follow us on Facebook!')">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" onclick="showToast('Follow us on Instagram!')">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" onclick="showToast('Subscribe on YouTube!')">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-link" onclick="showToast('Follow us on Twitter!')">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    Quick Links
+                </h3>
+                <ul class="footer-links">
+                    <li><a href="#learning">Learning Activities</a></li>
+                    <li><a href="#games">Fun Games</a></li>
+                    <li><a href="#tips">Parenting Tips</a></li>
+                    <li><a href="#" onclick="showToast('New content coming soon!')">New Arrivals</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">
+                    <i class="fas fa-palette"></i>
+                    Age Groups
+                </h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showToast('Newborn activities!')">👶 0-6 Months</a></li>
+                    <li><a href="#" onclick="showToast('Baby activities!')">🧸 6-12 Months</a></li>
+                    <li><a href="#" onclick="showToast('Toddler activities!')">🚀 1-2 Years</a></li>
+                    <li><a href="#" onclick="showToast('Preschool activities!')">🌟 2-3 Years</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">
+                    <i class="fas fa-envelope"></i>
+                    Stay Connected
+                </h3>
+                <p class="footer-description">Get weekly tips and fun activities!</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                    <button type="submit" class="newsletter-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> 1-800-BABYFUN</p>
+                    <p><i class="fas fa-envelope"></i> hello@babycarehub.com</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 BabyCare Hub. Made with <span class="heart">❤️</span> for little ones</p>
+                <div class="footer-bottom-links">
+                    <a href="#" onclick="showToast('Privacy Policy coming soon!')">Privacy Policy</a>
+                    <a href="#" onclick="showToast('Terms of Service coming soon!')">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Emergency Contact -->
+    <div class="emergency-contact" onclick="showEmergency()">
+        <i class="fas fa-phone-alt emergency-icon"></i>
+        <span class="emergency-text">Emergency: 911</span>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-smile-beam toast-icon"></i>
+        <span class="toast-message" id="toastMessage">Welcome to BabyCare Hub!</span>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loader
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+
+            // Create animated bubbles
+            createBubbles();
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.padding = '0.5rem 0';
+                } else {
+                    navbar.style.padding = '';
+                }
+            });
+
+            // Mobile menu toggle     
+            document.getElementById('mobileMenu').addEventListener('click', function() {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.toggle('active');
+                this.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Close mobile menu if open
+                        document.getElementById('navMenu').classList.remove('active');
+                        document.getElementById('mobileMenu').innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
+
+            // Welcome message
+            setTimeout(() => {
+                showToast('Welcome to BabyCare Hub! Let\'s learn and play! 🎈');
+            }, 1500);
+        });
+
+        // Create animated bubbles
+        function createBubbles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 20; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.background = color;
+                bubble.style.animationDuration = `${animationDuration}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        }
+
+        // Select age function
+        function selectAge(element) {
+            document.querySelectorAll('.age-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            const ageText = element.textContent;
+            showToast(`Showing activities for ${ageText}! 🎈`);
+            
+            // Add a fun animation
+            element.style.transform = 'scale(1.3) rotate(-10deg)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1.1) rotate(-3deg)';
+            }, 300);
+        }
+
+        // Show learning details
+        function showLearningDetails(topic) {
+            const learning = {
+                'alphabet': 'ABC Adventure: Learn A-Z with fun songs and animations! 🔤',
+                'numbers': 'Number Fun: Count from 1-10 with cute characters! 🔢',
+                'shapes': 'Shape Discovery: Circles, squares, triangles and more! 🔷',
+                'animals': 'Animal Friends: Meet lions, elephants, and more! 🦁'
+            };
+            
+            showToast(learning[topic] || 'Learning activity coming soon!');
+        }
+
+        // Show info for floating icons
+        function showInfo(type) {
+            const info = {
+                'abc': 'Learning letters is fun! A-B-C-D-E! 🔤',
+                '123': 'Count with me! 1-2-3-4-5! 🔢',
+                'shapes': 'Shapes everywhere! Circle, square, triangle! 🔷',
+                'colors': 'Red, blue, yellow, green! So many colors! 🎨'
+            };
+            
+            showToast(info[type] || 'Click to learn more!');
+            
+            // Add visual feedback
+            event.target.style.transform = 'scale(1.5) rotate(20deg)';
+            setTimeout(() => {
+                event.target.style.transform = '';
+            }, 300);
+        }
+
+        // Open color match game
+        function openColorMatchGame() {
+            showToast('Opening Color Match Game in new window! 🎨');
+            window.open('color-match-game.html', '_self');
+        }
+
+        // Open sound quiz
+        function openSoundQuiz() {
+            showToast('Opening Baby Sound Quiz in new window! 🎵');
+            window.open('baby-sound-quiz.html', '_self');
+        }
+
+        function openShapeGame() {
+            showToast('Opening Shape  Building in new window! 🧩');
+            window.open('shape-game.html', '_self');
+        }
+        function openMusicGame() {
+            showToast('Opening Music Game in new window! 🎵');
+            window.open('music-game.html', '_self');
+        }
+        function openPuzzleGame() {
+            showToast('Opening Puzzle Game in new window! 🧩');
+            window.open('puzzle-game.html', '_self');
+        }
+
+        // Show emergency contact
+        function showEmergency() {
+            showToast('Emergency: Call 911 immediately! 🚑 Keep calm and act fast!');
+            
+            // Add urgent animation
+            const emergencyBtn = document.querySelector('.emergency-btn');
+            emergencyBtn.style.animation = 'none';
+            setTimeout(() => {
+                emergencyBtn.style.animation = 'pulse 0.5s infinite';
+            }, 10);
+        }
+
+        // Subscribe to newsletter
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            showToast(`Thank you for subscribing! We'll send fun activities to ${email}! 🎈`);
+            event.target.reset();
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add mouse movement effect to floating icons
+        document.addEventListener('mousemove', (e) => {
+            const floatingIcons = document.querySelectorAll('.floating-icon');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            floatingIcons.forEach((icon, index) => {
+                const speed = (index + 1) * 0.5;
+                const xOffset = (x - 0.5) * speed * 20;
+                const yOffset = (y - 0.5) * speed * 20;
+                icon.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            var reviewCarousel = document.querySelector('#reviewsCarousel');
+            var carousel = new bootstrap.Carousel(reviewCarousel, {
+            interval: 4000,   // 4 seconds per slide
+            ride: 'carousel',
+            pause: 'hover'
+            });
+        });
+
+  // Simple fade/scale-in on scroll for pricing cards (optional)
+        document.addEventListener('DOMContentLoaded', function() {
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            pricingCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform += ' scale(0.96)';
+            });
+            const observer = new IntersectionObserver(
+            (entries) => {
+            entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = entry.target.classList.contains('pricing-featured')
+              ? "scale(1.07)"
+              : "scale(1.04)";
+            entry.target.style.transition = "transform 0.7s cubic-bezier(0.23,1,0.32,1), opacity 0.7s cubic-bezier(0.23,1,0.32,1)";
+            observer.unobserve(entry.target);
+        }
+            });
+        }, { threshold: 0.11 }
+        );
+            pricingCards.forEach(card => observer.observe(card));
+        });
+        // View More Games toggle
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
+        const hiddenGames = document.querySelectorAll('.hidden-game');
+        let expanded = false;
+
+        viewMoreBtn.addEventListener('click', () => {
+        expanded = !expanded;
+        hiddenGames.forEach(card => {
+        if (expanded) {
+        card.classList.add('show');
+        } 
+        else {
+        card.classList.remove('show');
+        setTimeout(() => (card.style.display = 'none'), 500);
+        }
+        });
+        viewMoreBtn.textContent = expanded ? '🙈 Show Less' : '👀 View All Games';
+        });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
+        const hiddenGames = document.querySelectorAll('.hidden-game');
+        let expanded = false;
+
+        // Initially hide hidden games
+        hiddenGames.forEach(card => (card.style.display = 'none'));
+
+        viewMoreBtn.addEventListener('click', () => {
+            expanded = !expanded;
+
+            hiddenGames.forEach(card => {
+            if (expanded) {
+                card.classList.add('show');
+                card.style.display = 'block';
+            } else {
+                card.classList.remove('show');
+                setTimeout(() => (card.style.display = 'none'), 400);
+            }
+            });
+
+            viewMoreBtn.textContent = expanded ? '🙈 Show Less' : '👀 View More';
+        });
+
+        // Play button functions
+        window.openColorMatchGame = () => window.open('color-match.html', '_self');
+        window.openSoundQuiz = () => window.open('sound-quiz.html', '_self');
+        window.openShapeGame = () => window.open('shape-builder.html', '_self');
+        window.openMusicGame = () => window.open('music-maker.html', '_self');
+        window.openPuzzleGame = () => window.open('simple-puzzles.html', '_self');
+        });
+
+</script>
+</body>
+</html>

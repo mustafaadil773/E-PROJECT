@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Play & Learn - BabyCare Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/music-game.css">
+    
+</head>
+<body>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- Header -->
+    <header class="game-header">
+        <div class="header-container">
+            <button class="back-btn" onclick="goToHome()">
+                <i class="bi bi-house-fill"></i>
+                Home
+            </button>
+            <h1 class="game-title">
+                <i class="bi bi-music-note-beamed"></i> Let's Make Music! 🎵
+            </h1>
+        </div>
+    </header>
+    
+    <!-- Main Game Container -->
+    <main class="game-container">
+        <!-- Mascot Section -->
+        <div class="mascot-section">
+            <div class="mascot-container">
+                <div class="mascot-image">🎵</div>
+                <div class="mascot-speech">Let's play!</div>
+            </div>
+        </div>
+        
+        <!-- Music Instruments Section -->
+        <section class="instruments-section">
+            <h2 class="section-title">🎸 Musical Instruments</h2>
+            <div class="instruments-grid">
+                <button class="music-btn btn-drum" onclick="playSound('drum', this)">
+                    <span class="instrument-icon">🥁</span>
+                    <span class="instrument-name">Drum</span>
+                </button>
+                <button class="music-btn btn-piano" onclick="playSound('piano', this)">
+                    <span class="instrument-icon">🎹</span>
+                    <span class="instrument-name">Piano</span>
+                </button>
+                <button class="music-btn btn-xylophone" onclick="playSound('xylophone', this)">
+                    <span class="instrument-icon">🎼</span>
+                    <span class="instrument-name">Xylophone</span>
+                </button>
+                <button class="music-btn btn-animal" onclick="playSound('animal', this)">
+                    <span class="instrument-icon">🐮</span>
+                    <span class="instrument-name">Animal</span>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Make Your Own Tune Section -->
+        <section class="tune-section">
+            <h2 class="section-title">🎶 Make Your Own Tune!</h2>
+            <div class="tune-grid">
+                <button class="tune-btn btn-note-c" onclick="playNote('C', this)">🎵</button>
+                <button class="tune-btn btn-note-d" onclick="playNote('D', this)">🎵</button>
+                <button class="tune-btn btn-note-e" onclick="playNote('E', this)">🎵</button>
+                <button class="tune-btn btn-note-f" onclick="playNote('F', this)">🎵</button>
+                <button class="tune-btn btn-note-g" onclick="playNote('G', this)">🎵</button>
+                <button class="tune-btn btn-note-a" onclick="playNote('A', this)">🎵</button>
+                <button class="tune-btn btn-note-b" onclick="playNote('B', this)">🎵</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create animated bubbles
+            createBubbles();
+        });
+        
+        // Create animated bubbles
+        function createBubbles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.background = color;
+                bubble.style.animationDuration = `${animationDuration}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        }
+        
+        // Play instrument sound
+        function playSound(instrument, button) {
+            // Add playing animation
+            button.classList.add('playing');
+            
+            // Create sound effect
+            const soundEmojis = {
+                'drum': '🥁 Boom Boom!',
+                'piano': '🎹 Plink Plink!',
+                'xylophone': '🎼 Ding Dong!',
+                'animal': '🐮 Moo Moo!'
+            };
+            
+            showSoundEffect(soundEmojis[instrument]);
+            
+            // Create floating music notes
+            createMusicNotes(button);
+            
+            // Remove animation class
+            setTimeout(() => {
+                button.classList.remove('playing');
+            }, 1500);
+        }
+        
+        // Play musical note
+        function playNote(note, button) {
+            // Add playing animation
+            button.classList.add('playing');
+            
+            // Create sound effect
+            showSoundEffect(`🎵 Note ${note}!`);
+            
+            // Create floating music notes
+            createMusicNotes(button);
+            
+            // Remove animation class
+            setTimeout(() => {
+                button.classList.remove('playing');
+            }, 500);
+        }
+        
+        // Show sound effect
+        function showSoundEffect(text) {
+            const soundEffect = document.createElement('div');
+            soundEffect.className = 'sound-effect';
+            soundEffect.textContent = text;
+            document.body.appendChild(soundEffect);
+            
+            setTimeout(() => {
+                soundEffect.remove();
+            }, 500);
+        }
+        
+        // Create floating music notes
+        function createMusicNotes(button) {
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const note = document.createElement('div');
+                    note.className = 'music-note';
+                    note.textContent = '🎵';
+                    note.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    const rect = button.getBoundingClientRect();
+                    note.style.left = rect.left + rect.width / 2 + 'px';
+                    note.style.top = rect.top + 'px';
+                    
+                    document.body.appendChild(note);
+                    
+                    setTimeout(() => {
+                        note.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+        
+        // Go to home page
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

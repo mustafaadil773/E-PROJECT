@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Adventure</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Comic Neue and Bubblegum Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/abc-adventure.css">
+</head>
+<body>
+    <!-- SIMPLIFIED NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span>🌈 Toddler Learning</span>
+            </a>
+            <button class="navbar-toggler pastel-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">📖 About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#programs">🎨 Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn enroll-btn ms-lg-3" href="#enroll">Enroll Now</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <div class="container">
+        <!-- Header section matching theme -->
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="activity-header">
+                    <h1 class="activity-title">ABC Adventure</h1>
+                    <p class="activity-subtitle">Explore the alphabet with fun activities!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="adventure-card">
+                    <!-- Floating icons around the card -->
+                    <div class="floating-icons">
+                        <div class="floating-icon">🚀</div>
+                        <div class="floating-icon">⭐</div>
+                        <div class="floating-icon">🌈</div>
+                        <div class="floating-icon">🎈</div>
+                    </div>
+                    
+                    <div class="letter-display fade-in" id="letterDisplay">A</div>
+                    <div class="word-display" id="wordDisplay">Adventure</div>
+                    <div class="emoji-display" id="emojiDisplay">🚀</div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" style="width: 4%"></div>
+                    </div>
+                    <div class="letter-counter" id="letterCounter">1 of 26</div>
+                    
+                    <button class="next-button" id="nextButton">Next Adventure →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visual feedback overlay -->
+    <div class="visual-feedback" id="visualFeedback">
+        <div class="feedback-card">
+            <div class="feedback-letter" id="feedbackLetter">A</div>
+            <div class="feedback-text" id="feedbackText">A is for Adventure!</div>
+            <div class="feedback-emoji" id="feedbackEmoji">🚀</div>
+            <button class="close-feedback" id="closeFeedback">Continue Adventure!</button>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast-container">
+        <div class="custom-toast" id="toastNotification"></div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ABC Adventure data with adventure-themed words and emojis
+        const adventures = [
+            { letter: 'A', word: 'Adventure', emoji: '🚀' },
+            { letter: 'B', word: 'Brave', emoji: '🦸' },
+            { letter: 'C', word: 'Climb', emoji: '🧗' },
+            { letter: 'D', word: 'Discover', emoji: '🔍' },
+            { letter: 'E', word: 'Explore', emoji: '🗺️' },
+            { letter: 'F', word: 'Fly', emoji: '✈️' },
+            { letter: 'G', word: 'Giggle', emoji: '😄' },
+            { letter: 'H', word: 'Happy', emoji: '😊' },
+            { letter: 'I', word: 'Imagine', emoji: '🎨' },
+            { letter: 'J', word: 'Jump', emoji: '🦘' },
+            { letter: 'K', word: 'Kind', emoji: '💝' },
+            { letter: 'L', word: 'Laugh', emoji: '😂' },
+            { letter: 'M', word: 'Magic', emoji: '🪄' },
+            { letter: 'N', word: 'Navigate', emoji: '🧭' },
+            { letter: 'O', word: 'Ocean', emoji: '🌊' },
+            { letter: 'P', word: 'Play', emoji: '🎮' },
+            { letter: 'Q', word: 'Quest', emoji: '⚔️' },
+            { letter: 'R', word: 'Run', emoji: '🏃' },
+            { letter: 'S', word: 'Sing', emoji: '🎤' },
+            { letter: 'T', word: 'Travel', emoji: '🚂' },
+            { letter: 'U', word: 'Unicorn', emoji: '🦄' },
+            { letter: 'V', word: 'Victory', emoji: '🏆' },
+            { letter: 'W', word: 'Wonder', emoji: '✨' },
+            { letter: 'X', word: 'X-ray', emoji: '🦴' },
+            { letter: 'Y', word: 'Yay', emoji: '🎉' },
+            { letter: 'Z', word: 'Zoom', emoji: '🚁' }
+        ];
+        
+        // Current letter index
+        let currentLetterIndex = 0;
+        
+        // DOM elements
+        const letterDisplay = document.getElementById('letterDisplay');
+        const wordDisplay = document.getElementById('wordDisplay');
+        const emojiDisplay = document.getElementById('emojiDisplay');
+        const nextButton = document.getElementById('nextButton');
+        const toastNotification = document.getElementById('toastNotification');
+        const progressBar = document.getElementById('progressBar');
+        const letterCounter = document.getElementById('letterCounter');
+        const visualFeedback = document.getElementById('visualFeedback');
+        const feedbackLetter = document.getElementById('feedbackLetter');
+        const feedbackText = document.getElementById('feedbackText');
+        const feedbackEmoji = document.getElementById('feedbackEmoji');
+        const closeFeedback = document.getElementById('closeFeedback');
+        const bgAnimation = document.getElementById('bgAnimation');
+        
+        // Create animated bubbles in background
+        function createBubbles() {
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Random size
+                const size = Math.random() * 60 + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position
+                bubble.style.left = `${Math.random() * 100}%`;
+                
+                // Random color
+                bubble.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random animation duration and delay
+                bubble.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        }
+        
+        // Initialize the display
+        function displayLetter() {
+            const currentAdventure = adventures[currentLetterIndex];
+            
+            // Remove animation classes
+            letterDisplay.classList.remove('fade-in', 'bounce');
+            emojiDisplay.classList.remove('bounce');
+            
+            // Force reflow to restart animation
+            void letterDisplay.offsetWidth;
+            
+            // Update content
+            letterDisplay.textContent = currentAdventure.letter;
+            wordDisplay.textContent = currentAdventure.word;
+            emojiDisplay.textContent = currentAdventure.emoji;
+            
+            // Add animation
+            letterDisplay.classList.add('fade-in');
+            
+            // Update progress
+            const progress = ((currentLetterIndex + 1) / adventures.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            letterCounter.textContent = `${currentLetterIndex + 1} of ${adventures.length}`;
+            
+            // Update button text for last letter
+            if (currentLetterIndex === adventures.length - 1) {
+                nextButton.textContent = 'Start New Adventure →';
+            } else {
+                nextButton.textContent = 'Next Adventure →';
+            }
+        }
+        
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    // Random position
+                    const x = Math.random() * window.innerWidth;
+                    confetti.style.left = `${x}px`;
+                    
+                    // Random color
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Random size
+                    const size = 5 + Math.random() * 10;
+                    confetti.style.width = `${size}px`;
+                    confetti.style.height = `${size}px`;
+                    
+                    // Random shape
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    } else {
+                        confetti.style.borderRadius = '0';
+                    }
+                    
+                    // Animation
+                    const duration = 2 + Math.random() * 2;
+                    confetti.style.animation = `confettiFall ${duration}s linear forwards`;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, duration * 1000);
+                }, i * 30);
+            }
+        }
+        
+        // Create star effect
+        function createStars(element) {
+            const rect = element.getBoundingClientRect();
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.innerHTML = '⭐';
+                star.style.fontSize = `${20 + Math.random() * 20}px`;
+                
+                // Random position around the element
+                const x = rect.left + Math.random() * rect.width;
+                const y = rect.top + Math.random() * rect.height;
+                
+                star.style.left = `${x}px`;
+                star.style.top = `${y}px`;
+                star.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Animation
+                star.style.animation = `starPulse ${0.8 + Math.random() * 0.4}s ease-out`;
+                
+                document.body.appendChild(star);
+                
+                // Remove star after animation
+                setTimeout(() => {
+                    star.remove();
+                }, 1200);
+            }
+        }
+        
+        // Show visual feedback when letter is clicked
+        function showVisualFeedback() {
+            const currentAdventure = adventures[currentLetterIndex];
+            
+            // Update feedback content
+            feedbackLetter.textContent = currentAdventure.letter;
+            feedbackText.textContent = `${currentAdventure.letter} is for ${currentAdventure.word}!`;
+            feedbackEmoji.textContent = currentAdventure.emoji;
+            
+            // Show feedback overlay
+            visualFeedback.classList.add('show');
+            
+            // Create visual effects
+            createConfetti();
+            createStars(letterDisplay);
+            createStars(emojiDisplay);
+            
+            // Show toast notification
+            showToast(`${currentAdventure.letter} is for ${currentAdventure.word}! ${currentAdventure.emoji}`);
+            
+            // Add bounce animation to letter and emoji
+            letterDisplay.classList.remove('bounce');
+            emojiDisplay.classList.remove('bounce');
+            
+            void letterDisplay.offsetWidth;
+            void emojiDisplay.offsetWidth;
+            
+            letterDisplay.classList.add('bounce');
+            emojiDisplay.classList.add('bounce');
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            toastNotification.textContent = message;
+            toastNotification.classList.add('show');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toastNotification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Event listeners
+        letterDisplay.addEventListener('click', showVisualFeedback);
+        emojiDisplay.addEventListener('click', showVisualFeedback);
+        
+        closeFeedback.addEventListener('click', function() {
+            visualFeedback.classList.remove('show');
+        });
+        
+        nextButton.addEventListener('click', function() {
+            // Move to next letter or start over
+            currentLetterIndex = (currentLetterIndex + 1) % adventures.length;
+            displayLetter();
+        });
+        
+        // Initialize the first letter
+        displayLetter();
+        
+        // Create background bubbles
+        createBubbles();
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ') {
+                event.preventDefault();
+                showVisualFeedback();
+            } else if (event.key === 'ArrowRight') {
+                currentLetterIndex = (currentLetterIndex + 1) % adventures.length;
+                displayLetter();
+            } else if (event.key === 'ArrowLeft') {
+                currentLetterIndex = (currentLetterIndex - 1 + adventures.length) % adventures.length;
+                displayLetter();
+            } else if (event.key === 'Escape' && visualFeedback.classList.contains('show')) {
+                visualFeedback.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

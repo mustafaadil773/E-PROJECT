@@ -1,0 +1,448 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #FF5E78;
+    --secondary-color: #5E7CFF;
+    --accent-color: #FFD93D;
+    --purple-color: #B388FF;
+    --green-color: #6BCF7F;
+    --orange-color: #FF9E44;
+    --pink-color: #FF6B9D;
+    --dark-color: #2D3436;
+    
+    /* Animal sound colors */
+    --cat-color: #FF6B35;
+    --dog-color: #8B4513;
+    --bird-color: #4CAF50;
+    --cow-color: #795548;
+    --elephant-color: #9C27B0;
+    --fish-color: #00BCD4;
+    --star-color: #FFD93D;
+    --heart-color: #FF6B9D;
+}
+
+body {
+    font-family: 'Comic Neue', cursive;
+    background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 25%, #FECFEF 50%, #B5FFFC 75%, #A6C1EE 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding: 2rem 0;
+}
+
+/* Animated Background with Bubbles */
+.bg-animation {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: float-up 8s infinite ease-in;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Game Header */
+.game-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.game-title {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* Animal Cards Grid */
+.animals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Animal Card Styles */
+.animal-card {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.animal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.animal-card.cat {
+    border-top: 4px solid var(--cat-color);
+}
+
+.animal-card.dog {
+    border-top: 4px solid var(--dog-color);
+}
+
+.animal-card.bird {
+    border-top: 4px solid var(--bird-color);
+}
+
+.animal-card.cow {
+    border-top: 4px solid var(--cow-color);
+}
+
+.animal-card.elephant {
+    border-top: 4px solid var(--elephant-color);
+}
+
+.animal-card.fish {
+    border-top: 4px solid var(--fish-color);
+}
+
+.animal-card.star {
+    border-top: 4px solid var(--star-color);
+}
+
+.animal-card.heart {
+    border-top: 4px solid var(--heart-color);
+}
+
+/* Animal Icon */
+.animal-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 4rem;
+    transition: transform 0.3s ease;
+}
+
+.animal-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Animal Name */
+.animal-name {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Sound Button */
+.sound-btn {
+    background: linear-gradient(135deg, var(--accent-color), var(--orange-color));
+    color: var(--dark-color);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Bubblegum Sans', cursive;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sound-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sound-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Toast Notification */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+}
+
+.custom-toast {
+    background-color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 3px solid var(--accent-color);
+}
+
+.custom-toast.success {
+    color: var(--green-color);
+    border-color: var(--green-color);
+}
+
+.custom-toast.error {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.custom-toast.show {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .animals-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .animal-card {
+        padding: 1rem;
+    }
+    
+    .animal-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .animal-name {
+        font-size: 1.3rem;
+    }
+    
+    .sound-btn {
+        padding: 10px 15px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .animals-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+    
+    .animal-card {
+        padding: 0.8rem;
+    }
+    
+    .animal-icon {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .animal-name {
+        font-size: 1.2rem;
+    }
+    
+    .sound-btn {
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .animals-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .animal-card {
+        padding: 0.6rem;
+    }
+    
+    .animal-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .animal-name {
+        font-size: 1.1rem;
+    }
+    
+    .sound-btn {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+}
+ /* NAVBAR STYLES - ULTRA THIN VERSION */
+ .navbar {
+    background: linear-gradient(90deg, #ffe0ec 60%, #c1e1f6 120%);
+    border-radius: 1.5rem; /* Much thinner - from 2.5rem */
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    box-shadow: 0 4px 20px 0 #ffb6b956; /* Reduced shadow */
+    padding: 6px 0; /* Reduced padding - from 10px */
+    position: fixed;
+    top: 15px; /* Moved slightly higher */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%; /* Slightly wider */
+    max-width: 1400px; /* Increased max-width */
+    z-index: 1000;
+    transition: all 0.3s ease;
+    height: 70px; /* Fixed height - much thinner */
+}
+
+.navbar-brand span {
+   font-size: 1.35rem; /* Slightly smaller */
+   font-weight: bold;
+   color: #64b5f6;
+   letter-spacing: 0.04em;
+}
+
+.nav-link {
+    font-size: 1.05rem; /* Smaller text */
+    background: #fff9c4;
+    padding: 8px 18px !important; /* Reduced padding */
+    border-radius: 1.5rem; /* Thinner border radius */
+    margin: 0 1px;
+    color: #474747 !important;
+    transition: all 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.nav-link:hover, .nav-link:focus {
+    background: #ffb6b9;
+    color: #fff !important;
+    box-shadow: 0 3px 12px 0 #ffb6b946; /* Reduced shadow */
+    transform: translateY(-1px); /* Reduced lift */
+}
+
+.enroll-btn {
+    background: #64b5f6;
+    color: #fff !important;
+    border-radius: 1.5rem; /* Thinner */
+    font-weight: bold;
+    padding: 8px 24px; /* Reduced padding */
+    font-size: 1.05rem; /* Slightly smaller */
+    box-shadow: 0 2px 15px #64b5f660; /* Reduced shadow */
+    transition: all 0.2s, transform 0.15s;
+}
+
+.enroll-btn:hover, .enroll-btn:focus {
+    background: #ffb6b9;
+    color: #fff !important;
+    transform: scale(1.03); /* Reduced scale */
+}
+
+.pastel-toggler {
+    border-radius: 1rem; /* Thinner */
+    border: 1px solid #fff9c4; /* Thinner border */
+    background: #fffde7;
+    height: 38px; /* Reduced height */
+    width: 38px; /* Reduced width */
+}
+
+/* RESPONSIVE ADJUSTMENTS - EVEN MORE AGGRESSIVE */
+@media (max-width: 1200px) {
+    .navbar {
+        width: 95%; /* Slightly wider on large screens */
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar-nav { 
+        gap: 0.2rem !important; /* Even smaller gap */
+    }
+    .nav-link, .enroll-btn { 
+        padding: 6px 14px !important; /* Even smaller on tablets */
+        margin-bottom: 3px;
+    }
+    .navbar { 
+        border-radius: 1.2rem; /* Even thinner */
+        height: 55px; /* Even thinner */
+        padding: 5px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%; /* Full width on mobile */
+        top: 10px; /* Even higher on mobile */
+        height: 50px; /* Even thinner on mobile */
+        padding: 4px 0;
+        border-radius: 1rem;
+    }
+    
+    .navbar-brand span {
+        font-size: 1.2rem; /* Even smaller on mobile */
+    }
+    
+    .nav-link, .enroll-btn { 
+        font-size: 0.95rem; /* Even smaller text on mobile */
+        padding: 5px 12px !important; /* Even smaller padding */
+        margin-bottom: 2px;
+    }
+    
+    .navbar-nav { 
+        gap: 0.1rem !important; /* Minimal gap on mobile */
+    }
+    
+    .pastel-toggler {
+        height: 32px; /* Even smaller on mobile */
+        width: 32px;
+        border-radius: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        top: 5px; /* Even higher on very small screens */
+        height: 45px; /* Even thinner on very small */
+        padding: 3px 0;
+    }
+    
+    .navbar-brand span {
+        font-size: 1.1rem; /* Even smaller on very small */
+    }
+    
+    .nav-link, .enroll-btn { 
+        font-size: 0.9rem; /* Even smaller text on very small */
+        padding: 4px 10px !important; /* Even smaller padding */
+        margin-bottom: 1px;
+    }
+}

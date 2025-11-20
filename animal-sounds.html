@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Sounds - Toddler Education</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Comic Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Css/animal-sounds.css">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+</head>
+<body>
+    <!-- SIMPLIFIED NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span>🌈 Toddler Learning</span>
+            </a>
+            <button class="navbar-toggler pastel-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">📖 About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#programs">🎨 Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn enroll-btn ms-lg-3" href="#enroll">Enroll Now</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <div class="container">
+        <!-- Game Header -->
+        <div class="game-header">
+            <h1 class="game-title">Animal Sounds</h1>
+        </div>
+        
+        <!-- Animal Cards Grid -->
+        <div class="animals-grid" id="animalsGrid">
+            <!-- Cat Card -->
+            <div class="animal-card cat" data-animal="cat" data-sound="catSound">
+                <div class="animal-icon">🐱</div>
+                <div class="animal-name">Cat</div>
+                <button class="sound-btn" data-sound="catSound">🔊 Play Sound</button>
+            </div>
+            
+            <!-- Dog Card -->
+            <div class="animal-card dog" data-animal="dog" data-sound="dogSound">
+                <div class="animal-icon">🐕</div>
+                <div class="animal-name">Dog</div>
+                <button class="sound-btn" data-sound="dogSound">🔊 Play Sound</button>
+            </div>
+            
+            <!-- Bird Card -->
+            <div class="animal-card bird" data-animal="bird" data-sound="birdSound">
+                <div class="animal-icon">🐦</div>
+                <div class="animal-name">Bird</div>
+                <button class="sound-btn" data-sound="birdSound">🔊 Play Sound</button>
+            </div>
+            
+            <!-- Cow Card -->
+            <div class="animal-card cow" data-animal="cow" data-sound="cowSound">
+                <div class="animal-icon">🐄</div>
+                <div class="animal-name">Cow</div>
+                <button class="sound-btn" data-sound="cowSound">🔊 Play Sound</button>
+            </div>
+            
+            <!-- Elephant Card -->
+            <div class="animal-card elephent" data-animal="elephant" data-sound="elephantSound">
+                <div class="animal-icon">🐘</div>
+                <div class="animal-name">Elephant</div>
+                <button class="sound-btn" data-sound="elephantSound">🔊 Play Sound</button>
+            </div>
+            
+            <!-- Fish Card -->
+            <div class="animal-card fish" data-animal="fish" data-sound="fishSound">
+                <div class="animal-icon">🐟</div>
+                <div class="animal-name">Fish</div>
+                <button class="sound-btn" data-sound="fishSound">🔊 Play Sound</button>
+            </div>
+            
+            <!-- Star Card -->
+            <div class="animal-card star" data-animal="starSound" data-sound="starSound">
+                <div class="animal-icon">⭐</div>
+                <div class="animal-name">Star</div>
+                <button class="sound-btn" data-sound="starSound">🌟 Play Sound</button>
+            </div>
+            
+            <!-- Heart Card -->
+            <div class="animal-card heart" data-animal="heartSound" data-sound="heartSound">
+                <div class="animal-icon">❤️</div>
+                <div class="animal-name">Heart</div>
+                <button class="sound-btn" data-sound="heartSound">💖 Play Sound</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast-container">
+        <div class="custom-toast" id="toastNotification"></div>
+    </div>
+    
+    <!-- Audio Elements -->
+    <audio id="catSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="dogSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="birdSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="cowSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="elephantSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="fishSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="starSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <audio id="heartSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // DOM elements
+        const animalsGrid = document.getElementById('animalsGrid');
+        const toastNotification = document.getElementById('toastNotification');
+        
+        // Create animal sound function
+        function playAnimalSound(animalId) {
+            const sound = document.getElementById(animalId);
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log('Sound play error:', e));
+            }
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            toastNotification.textContent = message;
+            toastNotification.classList.add('show');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toastNotification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Event listeners for all animal cards
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all animal cards
+            const animalCards = document.querySelectorAll('.animal-card');
+            
+            // Add click event listeners to all cards
+            animalCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const animalId = card.dataset.animal;
+                    const soundId = `${animalId}Sound`;
+                    
+                    // Play the corresponding animal sound
+                    playAnimalSound(soundId);
+                    
+                    // Add visual feedback
+                    card.style.transform = 'scale(1.1)';
+                    
+                    // Remove animation class after animation completes
+                    setTimeout(() => {
+                        card.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

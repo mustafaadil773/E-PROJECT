@@ -1,0 +1,492 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #FF5E78;
+            --secondary-color: #5E7CFF;
+            --accent-color: #FFD93D;
+            --purple-color: #B388FF;
+            --green-color: #6BCF7F;
+            --orange-color: #FF9E44;
+            --pink-color: #FF6B9D;
+            --dark-color: #2D3436;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 25%, #FECFEF 50%, #B5FFFC 75%, #A6C1EE 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background with Bubbles */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float-up 8s infinite ease-in;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            position: relative;
+            z-index: 100;
+            border-bottom: 5px solid var(--accent-color);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, var(--accent-color), var(--orange-color));
+            color: var(--dark-color);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: rotate(-5deg);
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px) rotate(0deg) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-title {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            animation: rainbow 5s infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { color: var(--primary-color); }
+            20% { color: var(--secondary-color); }
+            40% { color: var(--purple-color); }
+            60% { color: var(--green-color); }
+            80% { color: var(--orange-color); }
+            100% { color: var(--primary-color); }
+        }
+        
+        /* Main Game Container */
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* Mascot Section */
+        .mascot-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .mascot-container {
+            display: inline-block;
+            position: relative;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+        
+        .mascot-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--orange-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 5px dashed var(--pink-color);
+        }
+        
+        .mascot-speech {
+            position: absolute;
+            top: -30px;
+            right: -40px;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 1rem;
+            color: var(--primary-color);
+            transform: rotate(5deg);
+        }
+        
+        .mascot-speech::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+        }
+        
+        /* Music Instruments Section */
+        .instruments-section {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 5px dashed var(--secondary-color);
+            transform: rotate(-1deg);
+        }
+        
+        .section-title {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 2rem;
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .instruments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .music-btn {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transform: rotate(-2deg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-btn:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        
+        .music-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .music-btn:hover {
+            transform: translateY(-10px) rotate(0deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .music-btn:active {
+            transform: translateY(-5px) rotate(0deg) scale(1.02);
+        }
+        
+        .music-btn.playing {
+            animation: musicPulse 0.5s ease 3;
+        }
+        
+        @keyframes musicPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .instrument-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instrument-name {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .btn-drum {
+            background: linear-gradient(135deg, var(--primary-color), var(--pink-color));
+        }
+        
+        .btn-piano {
+            background: linear-gradient(135deg, var(--secondary-color), var(--purple-color));
+        }
+        
+        .btn-xylophone {
+            background: linear-gradient(135deg, var(--accent-color), var(--orange-color));
+        }
+        
+        .btn-animal {
+            background: linear-gradient(135deg, var(--green-color), #4CAF50);
+        }
+        
+        /* Make Your Own Tune Section */
+        .tune-section {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            padding: 2rem;
+            border: 5px dashed var(--accent-color);
+            transform: rotate(1deg);
+        }
+        
+        .tune-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+        
+        .tune-btn {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 2rem;
+            transform: rotate(-1deg);
+        }
+        
+        .tune-btn:nth-child(even) {
+            transform: rotate(1deg);
+        }
+        
+        .tune-btn:hover {
+            transform: translateY(-5px) rotate(0deg) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .tune-btn:active {
+            transform: translateY(-2px) rotate(0deg) scale(1.02);
+        }
+        
+        .tune-btn.playing {
+            animation: tuneGlow 0.5s ease;
+        }
+        
+        @keyframes tuneGlow {
+            0% { box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+            100% { box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        }
+        
+        .btn-note-c {
+            background: linear-gradient(135deg, #FF5E78, #FF6B9D);
+        }
+        
+        .btn-note-d {
+            background: linear-gradient(135deg, #5E7CFF, #7C4DFF);
+        }
+        
+        .btn-note-e {
+            background: linear-gradient(135deg, #FFD93D, #FF9E44);
+        }
+        
+        .btn-note-f {
+            background: linear-gradient(135deg, #6BCF7F, #4CAF50);
+        }
+        
+        .btn-note-g {
+            background: linear-gradient(135deg, #B388FF, #9C27B0);
+        }
+        
+        .btn-note-a {
+            background: linear-gradient(135deg, #FF9E44, #FF6B9D);
+        }
+        
+        .btn-note-b {
+            background: linear-gradient(135deg, #FF6B9D, #FF5E78);
+        }
+        
+        /* Sound Effect */
+        .sound-effect {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 3rem;
+            color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: soundPop 0.5s ease;
+            pointer-events: none;
+        }
+        
+        @keyframes soundPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Music Notes Animation */
+        .music-note {
+            position: fixed;
+            font-size: 2rem;
+            animation: floatNote 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        @keyframes floatNote {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .mascot-image {
+                width: 100px;
+                height: 100px;
+                font-size: 3rem;
+            }
+            
+            .mascot-speech {
+                font-size: 0.8rem;
+                right: -30px;
+            }
+            
+            .instruments-section,
+            .tune-section {
+                transform: rotate(0deg);
+            }
+            
+            .instruments-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .tune-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .music-btn {
+                padding: 1rem;
+            }
+            
+            .instrument-icon {
+                font-size: 2.5rem;
+            }
+            
+            .instrument-name {
+                font-size: 1rem;
+            }
+            
+            .tune-btn {
+                padding: 0.8rem;
+                font-size: 1.5rem;
+            }
+        }

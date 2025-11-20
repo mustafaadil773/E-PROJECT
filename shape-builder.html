@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Building Game - BabyCare Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/shape-game.css">
+</head>
+<body>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- Header -->
+    <header class="game-header">
+        <div class="header-container">
+            <button class="back-btn" onclick="goToHome()">
+                <i class="bi bi-house-fill"></i>
+                Home
+            </button>
+            <h1 class="game-title">
+                <i class="bi bi-triangle-fill"></i> Shape Building Game
+            </h1>
+        </div>
+    </header>
+    
+    <!-- Main Game Container -->
+    <main class="game-container">
+        <!-- Score Display -->
+        <div class="score-display">
+            <p class="score-text">Shapes Completed: <span class="score-value" id="scoreValue">0/5</span></p>
+        </div>
+        
+        <!-- Game Area -->
+        <div class="game-area">
+            <!-- Shapes Container -->
+            <div class="shapes-container">
+                <h2 class="shapes-title">🎨 Drag the Shapes</h2>
+                <div class="shapes-grid">
+                    <div class="shape-item shape-circle" draggable="true" data-shape="circle">⭕</div>
+                    <div class="shape-item shape-square" draggable="true" data-shape="square">⬜</div>
+                    <div class="shape-item shape-triangle" draggable="true" data-shape="triangle">🔺</div>
+                    <div class="shape-item shape-rectangle" draggable="true" data-shape="rectangle">▭</div>
+                    <div class="shape-item shape-star" draggable="true" data-shape="star">⭐</div>
+                </div>
+            </div>
+            
+            <!-- Drop Zones Container -->
+            <div class="drop-zones-container">
+                <h2 class="drop-zones-title">🎯 Match the Outlines</h2>
+                <div class="drop-zones-grid">
+                    <div class="drop-zone" data-shape="circle">
+                        <div class="drop-zone-outline outline-circle"></div>
+                    </div>
+                    <div class="drop-zone" data-shape="square">
+                        <div class="drop-zone-outline outline-square"></div>
+                    </div>
+                    <div class="drop-zone" data-shape="triangle">
+                        <div class="drop-zone-outline outline-triangle"></div>
+                    </div>
+                    <div class="drop-zone" data-shape="rectangle">
+                        <div class="drop-zone-outline outline-rectangle"></div>
+                    </div>
+                    <div class="drop-zone" data-shape="star">
+                        <div class="drop-zone-outline outline-star"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <h2 class="success-title">🎉 Yay! You built all the shapes!</h2>
+            <p class="success-text">Great job! You're a shape building expert!</p>
+            <button class="play-again-btn" onclick="resetGame()">
+                <i class="bi bi-arrow-clockwise"></i> Play Again
+            </button>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create animated bubbles
+            createBubbles();
+            
+            // Initialize drag and drop
+            initDragAndDrop();
+        });
+        
+        // Create animated bubbles
+        function createBubbles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.background = color;
+                bubble.style.animationDuration = `${animationDuration}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        }
+        
+        // Game variables
+        let completedShapes = 0;
+        let totalShapes = 5;
+        let draggedElement = null;
+        
+        // Initialize drag and drop
+        function initDragAndDrop() {
+            const shapeItems = document.querySelectorAll('.shape-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            
+            // Add drag event listeners to shapes
+            shapeItems.forEach(shape => {
+                shape.addEventListener('dragstart', handleDragStart);
+                shape.addEventListener('dragend', handleDragEnd);
+                
+                // Touch events for mobile
+                shape.addEventListener('touchstart', handleTouchStart, {passive: false});
+                shape.addEventListener('touchmove', handleTouchMove, {passive: false});
+                shape.addEventListener('touchend', handleTouchEnd);
+            });
+            
+            // Add drop event listeners to zones
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('drop', handleDrop);
+                zone.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+        
+        // Drag start
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+        
+        // Drag end
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+        
+        // Drag over
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            e.target.classList.add('drag-over');
+            return false;
+        }
+        
+        // Drag leave
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+        
+        // Drop
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.target.classList.remove('drag-over');
+            
+            const shapeType = draggedElement.dataset.shape;
+            const zoneType = e.target.dataset.shape;
+            
+            if (shapeType === zoneType && !e.target.querySelector('.shape-item')) {
+                // Correct placement
+                e.target.appendChild(draggedElement);
+                e.target.classList.add('correct');
+                draggedElement.draggable = false;
+                draggedElement.style.cursor = 'default';
+                
+                // Show success animation and sound
+                showSuccessEffect(e.target);
+                
+                // Update score
+                completedShapes++;
+                updateScore();
+                
+                // Check if game is complete
+                if (completedShapes === totalShapes) {
+                    setTimeout(showSuccessMessage, 1000);
+                }
+            } else {
+                // Wrong placement - bounce back
+                animateWrongPlacement(draggedElement);
+            }
+            
+            return false;
+        }
+        
+        // Touch events for mobile
+        let touchItem = null;
+        let touchOffset = {x: 0, y: 0};
+        
+        function handleTouchStart(e) {
+            touchItem = e.target;
+            const touch = e.touches[0];
+            const rect = touchItem.getBoundingClientRect();
+            touchOffset.x = touch.clientX - rect.left;
+            touchOffset.y = touch.clientY - rect.top;
+            touchItem.style.position = 'fixed';
+            touchItem.style.zIndex = '1000';
+            touchItem.classList.add('dragging');
+        }
+        
+        function handleTouchMove(e) {
+            if (!touchItem) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            touchItem.style.left = (touch.clientX - touchOffset.x) + 'px';
+            touchItem.style.top = (touch.clientY - touchOffset.y) + 'px';
+        }
+        
+        function handleTouchEnd(e) {
+            if (!touchItem) return;
+            
+            const touch = e.changedTouches[0];
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            touchItem.classList.remove('dragging');
+            touchItem.style.position = '';
+            touchItem.style.zIndex = '';
+            touchItem.style.left = '';
+            touchItem.style.top = '';
+            
+            if (elementBelow && elementBelow.classList.contains('drop-zone')) {
+                const shapeType = touchItem.dataset.shape;
+                const zoneType = elementBelow.dataset.shape;
+                
+                if (shapeType === zoneType && !elementBelow.querySelector('.shape-item')) {
+                    elementBelow.appendChild(touchItem);
+                    elementBelow.classList.add('correct');
+                    touchItem.draggable = false;
+                    touchItem.style.cursor = 'default';
+                    
+                    showSuccessEffect(elementBelow);
+                    completedShapes++;
+                    updateScore();
+                    
+                    if (completedShapes === totalShapes) {
+                        setTimeout(showSuccessMessage, 1000);
+                    }
+                } else {
+                    animateWrongPlacement(touchItem);
+                }
+            }
+            
+            touchItem = null;
+        }
+        
+        // Show success effect
+        function showSuccessEffect(element) {
+            // Create sound effect
+            showSoundEffect('🎉');
+            
+            // Add glow effect
+            element.style.boxShadow = '0 0 20px rgba(108, 207, 127, 0.8)';
+            setTimeout(() => {
+                element.style.boxShadow = '';
+            }, 1000);
+        }
+        
+        // Animate wrong placement
+        function animateWrongPlacement(element) {
+            element.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 500);
+        }
+        
+        // Show sound effect
+        function showSoundEffect(emoji) {
+            const soundEffect = document.createElement('div');
+            soundEffect.className = 'sound-effect';
+            soundEffect.textContent = emoji;
+            document.body.appendChild(soundEffect);
+            
+            setTimeout(() => {
+                soundEffect.remove();
+            }, 500);
+        }
+        
+        // Update score
+        function updateScore() {
+            document.getElementById('scoreValue').textContent = `${completedShapes}/${totalShapes}`;
+        }
+        
+        // Show success message
+        function showSuccessMessage() {
+            document.getElementById('successMessage').classList.add('show');
+            createConfetti();
+        }
+        
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 30);
+            }
+        }
+        
+        // Reset game
+        function resetGame() {
+            completedShapes = 0;
+            updateScore();
+            
+            // Hide success message
+            document.getElementById('successMessage').classList.remove('show');
+            
+            // Reset shapes
+            const shapesContainer = document.querySelector('.shapes-grid');
+            shapesContainer.innerHTML = `
+                <div class="shape-item shape-circle" draggable="true" data-shape="circle">⭕</div>
+                <div class="shape-item shape-square" draggable="true" data-shape="square">⬜</div>
+                <div class="shape-item shape-triangle" draggable="true" data-shape="triangle">🔺</div>
+                <div class="shape-item shape-rectangle" draggable="true" data-shape="rectangle">▭</div>
+                <div class="shape-item shape-star" draggable="true" data-shape="star">⭐</div>
+            `;
+            
+            // Reset drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('correct');
+                const shape = zone.querySelector('.shape-item');
+                if (shape) {
+                    shapesContainer.appendChild(shape);
+                }
+            });
+            
+            // Reinitialize drag and drop
+            initDragAndDrop();
+        }
+        
+        // Go to home page
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

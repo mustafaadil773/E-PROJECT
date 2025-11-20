@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Match Game - BabyCare Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/color-match-game.css">
+</head>
+<body>
+    <!-- Animated Background with Bubbles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <div class="game-container">
+        <!-- Fun emoji decorations -->
+        <div class="emoji-decoration emoji-1">🎈</div>
+        <div class="emoji-decoration emoji-2">🌟</div>
+        <div class="emoji-decoration emoji-3">🎨</div>
+        <div class="emoji-decoration emoji-4">🎯</div>
+        
+        <div class="game-header">
+            <h1 class="game-title">
+                <i class="bi bi-palette-fill"></i> Color Match Game
+            </h1>
+        </div>
+        
+        <div class="score-container">
+            <div class="score-item">
+                <span class="score-label">Score</span>
+                <span class="score-value" id="score">0</span>
+            </div>
+            <div class="score-item">
+                <span class="score-label">Streak</span>
+                <span class="score-value" id="streak">0</span>
+            </div>
+        </div>
+        
+        <div class="instruction">
+            <p class="instruction-text">
+                Tap the color: <span class="color-name" id="colorName">red</span>
+            </p>
+        </div>
+        
+        <div class="color-buttons">
+            <button class="color-btn btn-red" data-color="red"></button>
+            <button class="color-btn btn-blue" data-color="blue"></button>
+            <button class="color-btn btn-green" data-color="green"></button>
+            <button class="color-btn btn-yellow" data-color="yellow"></button>
+        </div>
+        
+        <div class="feedback">
+            <p class="feedback-text" id="feedback"></p>
+        </div>
+        
+        <button class="reset-btn" id="resetBtn">
+            <i class="bi bi-arrow-clockwise"></i> Reset Game
+        </button>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create animated bubbles
+            createBubbles();
+            
+            // Game variables
+            const colors = ['red', 'blue', 'green', 'yellow'];
+            let currentColor = '';
+            let score = 0;
+            let streak = 0;
+            let isProcessing = false;
+            
+            // DOM elements
+            const colorNameEl = document.getElementById('colorName');
+            const scoreEl = document.getElementById('score');
+            const streakEl = document.getElementById('streak');
+            const feedbackEl = document.getElementById('feedback');
+            const resetBtn = document.getElementById('resetBtn');
+            const colorButtons = document.querySelectorAll('.color-btn');
+            
+            // Initialize game
+            function initGame() {
+                currentColor = getRandomColor();
+                updateColorName();
+                resetFeedback();
+            }
+            
+            // Create animated bubbles
+            function createBubbles() {
+                const bgAnimation = document.getElementById('bgAnimation');
+                const colors = ['#FF5E78', '#5E7CFF', '#FFD93D', '#B388FF', '#6BCF7F', '#FF9E44', '#FF6B9D'];
+                
+                for (let i = 0; i < 15; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('bubble');
+                    
+                    const size = Math.random() * 60 + 20;
+                    const left = Math.random() * 100;
+                    const animationDuration = Math.random() * 10 + 5;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    bubble.style.width = `${size}px`;
+                    bubble.style.height = `${size}px`;
+                    bubble.style.left = `${left}%`;
+                    bubble.style.background = color;
+                    bubble.style.animationDuration = `${animationDuration}s`;
+                    bubble.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    bgAnimation.appendChild(bubble);
+                }
+            }
+            
+            // Get random color
+            function getRandomColor() {
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            // Update color name with animation
+            function updateColorName() {
+                colorNameEl.textContent = currentColor;
+                colorNameEl.style.color = getColorCode(currentColor);
+            }
+            
+            // Get color code for text
+            function getColorCode(color) {
+                const colorMap = {
+                    'red': 'var(--primary-color)',
+                    'blue': 'var(--secondary-color)',
+                    'green': 'var(--green-color)',
+                    'yellow': 'var(--accent-color)'
+                };
+                return colorMap[color] || 'var(--primary-color)';
+            }
+            
+            // Handle color button click
+            function handleColorClick(event) {
+                if (isProcessing) return;
+                
+                const selectedColor = event.target.dataset.color;
+                isProcessing = true;
+                
+                if (selectedColor === currentColor) {
+                    // Correct answer
+                    event.target.classList.add('correct');
+                    showFeedback('✅ Correct!', true);
+                    score++;
+                    streak++;
+                    updateScore();
+                    
+                    // Play success animation
+                    celebrateSuccess();
+                    
+                    setTimeout(() => {
+                        event.target.classList.remove('correct');
+                        currentColor = getRandomColor();
+                        updateColorName();
+                        resetFeedback();
+                        isProcessing = false;
+                    }, 1500);
+                } else {
+                    // Incorrect answer
+                    event.target.classList.add('incorrect');
+                    showFeedback('❌ Try again!', false);
+                    streak = 0;
+                    updateScore();
+                    
+                    setTimeout(() => {
+                        event.target.classList.remove('incorrect');
+                        resetFeedback();
+                        isProcessing = false;
+                    }, 1000);
+                }
+            }
+            
+            // Show feedback
+            function showFeedback(message, isCorrect) {
+                feedbackEl.textContent = message;
+                feedbackEl.className = 'feedback-text show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+            }
+            
+            // Reset feedback
+            function resetFeedback() {
+                feedbackEl.className = 'feedback-text';
+            }
+            
+            // Update score display
+            function updateScore() {
+                scoreEl.textContent = score;
+                streakEl.textContent = streak;
+                
+                // Add animation to score
+                scoreEl.style.animation = 'none';
+                streakEl.style.animation = 'none';
+                setTimeout(() => {
+                    scoreEl.style.animation = 'bounce 0.5s ease';
+                    streakEl.style.animation = 'bounce 0.5s ease';
+                }, 10);
+            }
+            
+            // Celebrate success
+            function celebrateSuccess() {
+                // Create celebration emojis
+                const emojis = ['🎉', '🌟', '🎈', '🎊', '✨'];
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const emoji = document.createElement('div');
+                        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                        emoji.style.position = 'fixed';
+                        emoji.style.left = Math.random() * window.innerWidth + 'px';
+                        emoji.style.top = window.innerHeight + 'px';
+                        emoji.style.fontSize = '2rem';
+                        emoji.style.zIndex = '9999';
+                        emoji.style.pointerEvents = 'none';
+                        emoji.style.animation = 'float-up 2s ease-out forwards';
+                        document.body.appendChild(emoji);
+                        
+                        setTimeout(() => emoji.remove(), 2000);
+                    }, i * 100);
+                }
+            }
+            
+            // Reset game
+            function resetGame() {
+                score = 0;
+                streak = 0;
+                updateScore();
+                initGame();
+                showToast('Game Reset! Let\'s play again! 🎈');
+            }
+            
+            // Show toast notification
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 20px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                    font-family: 'Bubblegum Sans', cursive;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: var(--primary-color);
+                    z-index: 1000;
+                    border: 3px solid var(--accent-color);
+                    animation: slideInUp 0.3s ease;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'slideInDown 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2000);
+            }
+            
+            // Event listeners
+            colorButtons.forEach(button => {
+                button.addEventListener('click', handleColorClick);
+            });
+            
+            resetBtn.addEventListener('click', resetGame);
+            
+            // Start game
+            initGame();
+            
+            // Welcome message
+            setTimeout(() => {
+                showToast('Welcome to Color Match! 🎨');
+            }, 500);
+        });
+        
+        // Add slideInDown animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInDown {
+                from {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
